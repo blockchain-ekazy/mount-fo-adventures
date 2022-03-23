@@ -5,7 +5,8 @@ import Img2 from "./Imgs/2.webp";
 import Img3 from "./Imgs/3.webp";
 import Img4 from "./Imgs/4.webp";
 import Img5 from "./Imgs/5.webp";
-import Img6 from "./Imgs/6.png";
+import Img6 from "./Imgs/6.webp";
+
 import bg1 from "./Imgs/bg1.png";
 import Mintbtn from "./mintbtn";
 import os from "./Imgs/os.png";
@@ -20,11 +21,19 @@ export default function Home() {
               <img className="imghead w-100 mt-5" src={bg1}></img>
               <div className="container text-center py-2 text-white mt-5  ">
                 <p>
-                  <i className="fab fa-discord Footer px-1 mt-2"></i>
+                  <a href="https://discord.gg/gDXhTH3eX6" target="_blank">
+                    <i className="fab fa-discord Footer px-1 mt-2"></i>
+                  </a>
 
-                  <i className=" px-1 Footer fab fa-twitter mt-2"></i>
-
-                  <img src={os} className="px-2" style={{ width: "50px" }} />
+                  <a href="https://twitter.com/mounts_for_loot" target="_blank">
+                    <i className=" px-1 Footer fab fa-twitter mt-2"></i>
+                  </a>
+                  <a
+                    href="https://opensea.io/collection/mounts-for-adventurers-v1"
+                    target="_blank"
+                  >
+                    <img src={os} className="px-2" style={{ width: "50px" }} />
+                  </a>
                 </p>
               </div>
               <div className="container">
@@ -35,15 +44,15 @@ export default function Home() {
                       Lootverse
                     </h2>
                     <p className="mount  text-center mt-5">
-                      Mounts is a randomly generated, on-chain, Lootverse
-                      ‘lego’. Mounts are creatures upon which Adventures ride to
-                      explore the realms. Adventures will need a way to move
-                      quickly between realms, towns, crypts, caverns, and
-                      dungeons. And of course, Adventurers will need a way to
-                      haul all the Loot which they plunder from said dungeons
-                      and monsters! Each mount has a set of unique stats and
-                      attributes which can be used and interpreted as desired by
-                      game designers.
+                      Mounts for Adventurers are a randomly generated, on-chain,
+                      Lootverse ‘lego’. Mounts are creatures upon which
+                      Adventures ride to explore the realms. Adventures will
+                      need a way to move quickly between realms, towns, crypts,
+                      caverns, and dungeons. And of course, Adventurers will
+                      need a way to haul all the Loot which they plunder from
+                      said dungeons and monsters! Each mount has a set of unique
+                      stats and attributes which can be used and interpreted as
+                      desired by game designers.
                     </p>
                   </div>
                 </div>
@@ -65,55 +74,37 @@ export default function Home() {
                   contributors.
                 </p>
               </div>
-              <div className="container mm mt-5">
+
+              <Mintbtn />
+              {/* <div className="container mm mt-5">
                 <div className="row">
-                  <div className="col-3"></div>
-                  <div className="col-3">
-                    <p className="mount  text-center mt-5">
-                      Minted: n,nnn\7,900
-                    </p>
+                  <div className="col-md-3 col-12">
+                    <img className="imghead w-100"  src={Img3}></img>
                   </div>
-                  <div className="col-3">
-                    <p className="mount  text-center mt-5">Remaining: n,nnn</p>
-                  </div>
-                  <div className="col-3"></div>
-                </div>
-              </div>
-              <div className="container mm mt-5">
-                <div className="row">
-                  <div className="col-4">
-                    <img className="imghead w-100" src={Img3}></img>
-                  </div>
-                  <div className="col-4">
+                  <div className="col-md-3 col-12">
                     <img className="imghead w-100" src={Img4}></img>
                   </div>
-                  <div className="col-4">
+                  <div className="col-md-3 col-12">
                     {" "}
                     <img className="imghead w-100" src={Img5}></img>
                   </div>
-                </div>
-              </div>
-              <div className="container mm mt-5">
-                <div className="row">
-                  <div className="col-4"></div>
-                  <div className="col-4">
+                  <div className="col-md-3 col-12 mx-auto">
                     <img className="imghead w-100" src={Img6}></img>
                   </div>
-                  <div className="col-4"></div>
                 </div>
-              </div>
+              </div> */}
               <div className="container">
                 <div className="row">
                   <div className="col-12">
                     <h2 className="gen text-white text-center">
-                      About Loot Mounts
+                      About Mounts for Adventurers
                     </h2>
                     <p className="mount  text-center mt-5">
-                      Loot Mounts are 8000 unique randomized on chain Mounts.
-                      Each mount has a basic set of stats and properties that
-                      can be used and interpreted as desired. Each mount
-                      consists of a Type, a combination of random Name
-                      Modifiers, 2 Attributes, and 4 randomly generated Stats.
+                      There are 8000 unique randomized on chain Mounts. Each
+                      mount has a basic set of stats and properties that can be
+                      used and interpreted as desired. Each mount consists of a
+                      Type, a combination of random Name Modifiers, 2
+                      Attributes, and 4 randomly generated Stats.
                     </p>
                     <h2 className="gen text-white tex t-center">Type</h2>
                     <p className="mount  text-center mt-5">
@@ -134,11 +125,13 @@ export default function Home() {
                     </p>
                     <h2 className="gen text-white tex t-center">Attributes</h2>
                     <p className="mount  text-center mt-5">
-                      The basic Attributes are [Color] and [Gender] <br></br>
+                      The basic Attributes are [Color], [Gender], and
+                      Generation. <br></br>
                       <br></br>
-                      Both are pretty self explanatory, but Gender will come in
-                      to play later for<br></br>
-                      breeding.
+                      The first two are pretty self explanatory, but Gender will
+                      come in to play later for breeding. The first mounts that
+                      are minted will be Generation 0, subsequent generations
+                      will be produced from breeding.<br></br>
                     </p>
                     <h2 className="gen text-white tex t-center">Stats</h2>
                     <p className="mount  text-center mt-5">
@@ -153,32 +146,57 @@ export default function Home() {
                     <p className="mounti mt-5">
                       <b className="text-white"> [Speed]:</b> Modify the
                       Adventurers travel speed between point A and point B
-                      (moving between dungeons, or realms for example).<br></br>
+                      (moving between dungeons, or realms for example) This
+                      could be implemented as a modifier to cooldown timers or
+                      lock timers for example. Speed could also play a role in
+                      escape mechanics.<br></br>
                       <br></br> <b className="text-white">[Stamina]:</b> The
                       length of time the mount can travel before needing to
-                      rest.<br></br>
+                      rest. This could be utalized to further modify timings
+                      either in conjunction with speed, or by itself as
+                      essentially a cooldown timer for the cooldown timer, i.e.
+                      how many times per day coudl the speed modifier be used.
+                      <br></br>
                       <br></br>
                       <b className="text-white"> [Strength]:</b> boosts the
                       amount of loot that an adventurer can carry, those bags of
                       gold and loot you just plundered from that dungeon are
-                      heavy after all !<br></br> <br></br>
+                      heavy after all ! We could also modify the adventurers
+                      speed vs the ammount of weight from armor and loot, a
+                      stronger horse can carry a heavier load faster, for a
+                      longer time.<br></br> <br></br>
                       <b className="text-white"> [Endurance]:</b> The amount of
                       damage that a mount can sustain before it needs to rest
-                      and heal – all those traps and monsters you just ran
+                      and heal, all those traps and monsters you just ran
                       through are pokey and bitey ouch !!
                     </p>
                     <h2 className="gen text-white tex t-center">RoadMap</h2>
                     <p className="mount  text-center mt-5">
-                      Q1 2022 : Launch<br></br>Q2 2022: Breeding and Journey to
+                      Q1 2022 : Launch<br></br>Q2 2022: Staking and Migration to
                       StarkNet<br></br>
-                      Q3 2022 and beyond: Hopefully lots of awesome game
-                      integrations!
+                      Q3 2022 and beyond: Breeding and game integrations!
                     </p>
                     <h2 className="gen text-white tex t-center">Contact Us</h2>
                     <p className="mount  text-center mt-5">
-                      Join us on Discord <br></br>
-                      <br></br>Follow us on Twitter<br></br>
-                      <br></br> Check us out on OpenSea
+                      <a href="https://discord.gg/gDXhTH3eX6" target="_blank">
+                        Join us on Discord
+                      </a>{" "}
+                      <br></br>
+                      <br></br>
+                      <a
+                        href="https://twitter.com/mounts_for_loot"
+                        target="_blank"
+                      >
+                        Follow us on Twitter
+                      </a>
+                      <br></br>
+                      <br></br>{" "}
+                      <a
+                        href="https://opensea.io/collection/mounts-for-adventurers-v1"
+                        target="_blank"
+                      >
+                        Check us out on OpenSea
+                      </a>
                     </p>
                   </div>
                 </div>

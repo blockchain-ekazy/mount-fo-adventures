@@ -561,7 +561,7 @@ script + iframe {
   margin-bottom: 13px;
 }
 .gen {
-  font-family: perrygot;
+  font-family: perrygot !important;
   font-size: 25px;
   font-weight: 600;
   margin-top: 50px;
@@ -578,4 +578,24 @@ script + iframe {
   font-weight: 100;
   color: gray;
   text-align: left;
+}
+.errormessage {
+  background-image: url(./Imgs/empty.png);
+  width: 450px;
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 65px;
+  margin: auto;
+  color: #a20707;
+  font-size: 17px;
+  max-width: 100%;
+}
+.conntectImg {
+  width: 450px;
+  max-width: 100%;
 }

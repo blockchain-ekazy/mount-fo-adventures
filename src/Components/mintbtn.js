@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import abi from "./abi.json";
 import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
+
+import ConnectW from "./Imgs/Capture.PNG";
+import Img3 from "./Imgs/3.webp";
+import Img4 from "./Imgs/4.webp";
+import Img5 from "./Imgs/5.webp";
+import Img6 from "./Imgs/6.webp";
 require("dotenv").config();
 
-const REACT_APP_CONTRACT_ADDRESS = "0x8Dd24d6B391576624bc82B5Ef04Cb3B68e4Df6A3";
-const SELECTEDNETWORK = "1";
+const REACT_APP_CONTRACT_ADDRESS = "0xf291383B95115F8ee7C504DF162b198BCdE24AC9";
+const SELECTEDNETWORK = "4";
 const SELECTEDNETWORKNAME = "Ethereum Mainnet";
 const nftquantity = 500;
 
 function Mintbtn() {
   const [errormsg, setErrorMsg] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [totalSupply, settotalSupply] = useState(0);
+  const [totalSupply, settotalSupply] = useState("n,nnn");
   const [walletConnected, setWalletConnected] = useState(0);
-  const [whitelistedUser, setWhitelistedUser] = useState(0);
 
   useEffect(async () => {
     if (await detectEthereumProvider()) {
@@ -31,16 +35,11 @@ function Mintbtn() {
         }
       } else {
         // setProvider(false);
-        setErrorMsg(
-          'Select "' +
-            SELECTEDNETWORKNAME +
-            '" network in your wallet to buy the nft'
-        );
+        setErrorMsg('Select "' + SELECTEDNETWORKNAME + '" to MINT');
       }
     } else {
-      setErrorMsg(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
+      setErrorMsg("Please install MetaMask!");
+
       // setProvider(false);
     }
     if (window.ethereum) {
@@ -64,7 +63,7 @@ function Mintbtn() {
     }
   }, []);
 
-  async function loadWeb3() {
+  async function loadWeb3(q) {
     if (await detectEthereumProvider()) {
       window.web3 = new Web3(window.ethereum);
       await window.ethereum.enable();
@@ -83,12 +82,30 @@ function Mintbtn() {
           return;
         }
 
-        let price = 25 * 10 ** 15; //await ct.methods.getPrice().call();
-        await ct.methods
-          .mint(quantity)
-          .send({ from: metaMaskAccount, value: price * quantity });
-        settotalSupply(await ct.methods.totalSupply().call());
-        setQuantity(1);
+        let price = await ct.methods.price().call();
+        const Status = await ct.methods.status().call();
+        let maxa = await ct.methods.maxPerAdd().call();
+
+        if (Status == 1) {
+          let alreadyMinted = await ct.methods
+            .balanceOf(metaMaskAccount)
+            .call();
+          if (Number(alreadyMinted) + Number(q) <= maxa) {
+            await ct.methods.presaleMint(q).send({
+              from: metaMaskAccount,
+              value: price * q,
+            });
+          } else {
+            setErrorMsg("Max " + maxa + " mints allowed in whitelist");
+          }
+        } else if (Status == 2) {
+          await ct.methods.mint(q).send({
+            from: metaMaskAccount,
+            value: price * q,
+          });
+        }
+        // settotalSupply(await ct.methods.totalSupply().call());
+        // setQuantity(1);
       } else {
         setErrorMsg(
           'Select "' +
@@ -103,9 +120,7 @@ function Mintbtn() {
       //   "Non-Ethereum browser detected. You should consider trying MetaMask!"
       // );
       {
-        setErrorMsg(
-          "Non-Ethereum browser detected. You should consider trying MetaMask!"
-        );
+        setErrorMsg("Please install MetaMask!");
       }
     }
   }
@@ -124,98 +139,113 @@ function Mintbtn() {
         let metaMaskAccount = await web3.eth.getAccounts();
         metaMaskAccount = metaMaskAccount[0];
 
-        let statusone = await ct.methods.getStatus().call();
+        const Status = await ct.methods.status().call();
 
-        if (statusone == 2 || statusone == 1) {
+        if (Status == 0) {
+          setErrorMsg("Sale Not started");
+        } else if (Status == 1) {
+          let wl = await ct.methods.isWhitelisted(metaMaskAccount).call();
+          if (wl) {
+            setWalletConnected(1);
+          } else {
+            setErrorMsg("You Are Not Whitelisted");
+          }
+        } else if (Status == 2) {
           setWalletConnected(1);
-          if (statusone == 1) {
-            let wl = await ct.methods.isWhitelisted(metaMaskAccount).call();
-            console.log(wl);
-            if (wl) setWhitelistedUser(1);
-            else setWhitelistedUser(2);
-          } else if (statusone == 2) setWhitelistedUser(1);
-        } else {
-          setWalletConnected(2);
         }
       }
     }
   }
 
   return (
-    <div className="BtnDiv">
+    <div className=" ">
+      <div className="container mm mt-5">
+        <div className="row">
+          <div className="col-2"></div>
+          <div className="col-md-4">
+            <p className="mount gen my-2 my-md-5 text-center">
+              Minted: {totalSupply}\7,900
+            </p>
+          </div>
+          <div className="col-md-4">
+            <p className="mount gen my-2 my-md-5 text-center">
+              Remaining: {7900 - totalSupply}
+            </p>
+          </div>
+          <div className="col-2"></div>
+        </div>
+      </div>
       {!errormsg ? (
         <div className="row align-items-center">
           {walletConnected == 0 ? (
-            <div className="col-12">
-              <button
+            <div className=" col-12">
+              <h3
+                className=" text-white text-center d-block w-100"
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   connectWallet();
                 }}
-                className="connectbtn btn text-white d-block w-100"
               >
-                Connect Wallet
-              </button>
+                <img className="conntectImg" src={ConnectW}></img>
+              </h3>
             </div>
           ) : (
             ""
           )}
           {walletConnected == 1 ? (
-            <>
-              {whitelistedUser == 1 ? (
-                <>
-                  <div className="col-sm-5">
-                    <div className="d-flex justify-content-center align-items-center">
-                      <button
-                        className="count btn mx-3 "
-                        onClick={() => setQuantity(quantity - 1)}
-                        disabled={quantity == 1}
-                      >
-                        {" "}
-                        -{" "}
-                      </button>
-                      <span className="quantity"> {quantity} </span>
-                      <button
-                        className="count btn mx-3 "
-                        onClick={() => setQuantity(quantity + 1)}
-                        disabled={quantity == 5}
-                      >
-                        {" "}
-                        +{" "}
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col-sm-7 pt-3 pt-sm-0">
-                    <button
-                      type="button"
-                      className="connectbtn btn text-white d-block w-100"
-                      onClick={() => loadWeb3()}
-                    >
-                      Mint A Crab
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <h4 className="text-center text-white teamname w-100">
-                  Not Whitelisted, Please wait for public sale
-                </h4>
-              )}
-            </>
-          ) : (
-            ""
-          )}
-          {walletConnected == 2 ? (
-            <h6 className="text-center text-white teamname w-100">
-              Sale Ended
-            </h6>
+            <div className="container mm mt-5">
+              <div className="row">
+                <div className="col-md-3 col-12">
+                  <img
+                    className="imghead w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      // setQuantity(1);
+                      // console.log(quantity);
+                      loadWeb3(1);
+                    }}
+                    src={Img3}
+                  ></img>
+                </div>
+                <div className="col-md-3 col-12">
+                  <img
+                    className="imghead w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      loadWeb3(5);
+                    }}
+                    src={Img4}
+                  ></img>
+                </div>
+                <div className="col-md-3 col-12">
+                  <img
+                    className="imghead w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      loadWeb3(10);
+                    }}
+                    src={Img5}
+                  ></img>
+                </div>
+                <div className="col-md-3 col-12 mx-auto">
+                  <img
+                    className="imghead w-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      loadWeb3(20);
+                    }}
+                    src={Img6}
+                  ></img>
+                </div>
+              </div>
+            </div>
           ) : (
             ""
           )}
           {/* <p className="mt-3 text-white mx-auto mb-0 text-center">{nftquantity-totalSupply}/{nftquantity} Available</p> */}
         </div>
       ) : (
-        <h5 className="mt-2 supplytext">
-          <b>{errormsg}</b>
-        </h5>
+        <h5 className="errormessage gen">{errormsg}</h5>
       )}
     </div>
   );
